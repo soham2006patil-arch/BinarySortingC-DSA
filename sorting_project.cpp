@@ -6,7 +6,7 @@
 using namespace std;
 
 // Function to visualize the array as bars
-void visualizeArray(const vector<int>& arr, int n, int active1 = -1, int active2 = -1) {
+void visualizeArray(const vector<int>& arr, int n, int active1 = -1, int active2 = -1) { 
     // Clear screen (works on most terminals)
     cout << "\033[2J\033[H"; 
     
@@ -31,16 +31,28 @@ void visualizeArray(const vector<int>& arr, int n, int active1 = -1, int active2
 }
 
 int main() {
-    vector<int> arr = {8, 3, 12, 5, 1, 9, 4, 7}; // Small dataset
-    int n = arr.size();
+    int n = 0;
+    cout << "Enter number of elements: ";
+    cin >> n;
+    if (n <= 0) {
+        cout << "Nothing to sort.\n";
+        return 0;
+    }
+
+    vector<int> arr(n);
+    cout << "Enter " << n << " numbers: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
     int swapCount = 0;
 
     cout << "Press Enter to start the visualization...";
+    cin.ignore();
     cin.get();
 
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
-            visualizeArray(arr, n, j, j + 1);
+            visualizeArray(arr, n, j, j + 1); 
             cout << "Comparing " << arr[j] << " and " << arr[j + 1] << "...\n";
             this_thread::sleep_for(chrono::milliseconds(500));
 
