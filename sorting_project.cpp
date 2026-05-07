@@ -2,6 +2,8 @@
 #include <vector>
 #include <chrono>
 #include <thread>
+#include <limits>
+#include <cctype>
 
 using namespace std;
 
@@ -44,10 +46,19 @@ int main() {
     for (int i = 0; i < n; i++) {
         cin >> arr[i];
     }
+    char order = 'a';
+    cout << "Sort order? (a = ascending, d = descending): ";
+    cin >> order;
+    order = static_cast<char>(tolower(order));
+    if (order != 'a' && order != 'd') {
+        cout << "Invalid choice, defaulting to ascending.\n";
+        order = 'a';
+    }
+
     int swapCount = 0;
 
     cout << "Press Enter to start the visualization...";
-    cin.ignore();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.get();
 
     for (int i = 0; i < n - 1; i++) {
@@ -56,7 +67,8 @@ int main() {
             cout << "Comparing " << arr[j] << " and " << arr[j + 1] << "...\n";
             this_thread::sleep_for(chrono::milliseconds(500));
 
-            if (arr[j] > arr[j + 1]) {
+            if ((order == 'a' && arr[j] > arr[j + 1]) ||
+                (order == 'd' && arr[j] < arr[j + 1])) {
                 swap(arr[j], arr[j + 1]);
                 swapCount++;
                 
